@@ -1,14 +1,18 @@
-# Projekt: <Main> Seele
+# Projekt: <Main> Seele [![Discord](https://cdn.discordapp.com/app-icons/416210432789839883/37b86ac18f28b86c04761ba607f4653d.png)](https://discord.gg/QU7cpTF)
+InDev: Bot which should have desired functions for our DiscordServer with 
+JDA(https://github.com/DV8FromTheWorld/JDA)
+# Commands
+comming soon
 
-Hierbei handelt es sich um einen DiscordBot, welcher für den eigenen Discord verwendet werden soll.
-Momentan ist 'Seele' relativ Leer und wird nur mal nach und nach mit Funktionen ausgestattet.</br>
-</br>
-<code>
-&nbsp;-say&nbsp;X&nbsp;sprachrohr für den User (Teammitglied)
-</br>
--shout&nbsp;-&nbsp;X&nbsp;erweitertes Sprachrohr für den User (Teammitglied) für anderne Channel
-</br></code>
+# Support
+comming soon
 
+# Donation
+comming soon
+
+## Credits
+* Dev: JayOlino
+* FlareBot's Avatar is made by [Delirus Avis](-)
 
 
 

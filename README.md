@@ -2,17 +2,15 @@
 InDev: Bot which should have desired functions for our DiscordServer with 
 JDA(https://github.com/DV8FromTheWorld/JDA)
 # Commands
-comming soon
+coming soon
 
 # Support
-comming soon
+coming soon
 
-# Donation
-comming soon
 
 ## Credits
 * Dev: JayOlino
-* FlareBot's Avatar is made by [Delirus Avis](-)
+* Avatar of <Main> Seele is made by [Delirus Avis](-)
 
 
 

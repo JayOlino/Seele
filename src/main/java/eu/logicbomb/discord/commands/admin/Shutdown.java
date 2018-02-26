@@ -6,9 +6,11 @@ import net.dv8tion.jda.core.entities.Message;
 public class Shutdown implements ICommand {
 
     @Override
-    public void run(Message msg) {
-        if (isBotOrFake(msg.getAuthor())) {
-
+    public void run(String[] args, Message msg) {
+        if (!isBotOrFake(msg.getAuthor())) {
+            if (isOwnerOrAdmin(msg)) {
+                msg.getJDA().shutdownNow();
+            }
         }
     }
 

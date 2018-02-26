@@ -7,7 +7,7 @@ import net.dv8tion.jda.core.entities.User;
 
 public interface ICommand {
 
-    public void run(Message msg);
+    public void run(String[] args, Message msg);
 
     public String whatDoYouDo();
 

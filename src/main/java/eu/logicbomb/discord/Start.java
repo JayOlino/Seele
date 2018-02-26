@@ -10,9 +10,6 @@ import java.util.Set;
 
 import org.reflections.Reflections;
 
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
-
 import eu.logicbomb.discord.icommands.ICommand;
 import eu.logicbomb.discord.listener.CommandListener;
 import eu.logicbomb.discord.listener.ReadyListener;
@@ -29,7 +26,6 @@ public class Start {
     private void init() {
 
         try {
-            createDB();
             initProperty();
             initCommands();
             JDABuilder jdaB = new JDABuilder(AccountType.BOT);
@@ -39,7 +35,9 @@ public class Start {
             jdaB.setStatus(OnlineStatus.DO_NOT_DISTURB);
             jdaB.setToken(properties.getProperty("BotToken"));
             jdaB.setGame(Game.watching("Wie Chio an meinen gedärmen spielt...."));
+
             JDA jda = jdaB.buildAsync();
+
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -95,18 +93,6 @@ public class Start {
             }
         }
         System.out.println("Added " + commandmap.size() + " commands!");
-    }
-
-    private void createDB() {
-        try {
-            MongoClient mc = new MongoClient("localhost", 27017);
-            MongoDatabase db = mc.getDatabase("Seele");
-
-            System.out.println("Connection established");
-        }
-        catch(Exception e) {
-            System.err.println(e.getMessage());
-        }
     }
 
     public static void main(String[] args) {

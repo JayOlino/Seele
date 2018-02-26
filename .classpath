@@ -32,6 +32,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/JDA-3.5.1_339-withDependencies.jar"/>
+	<classpathentry kind="lib" path="lib/JDA-3.5.1_339-withDependencies.jar" sourcepath="C:/Users/bossle/Downloads/JDA-3.5.1_339-sources.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

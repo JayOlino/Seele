@@ -6,7 +6,7 @@ import net.dv8tion.jda.core.entities.Message;
 public class Sample implements ICommand {
 
     @Override
-    public void run(Message msg) {
+    public void run(String[] args, Message msg) {
         if (!isBotOrFake(msg.getAuthor())) {
 
         }

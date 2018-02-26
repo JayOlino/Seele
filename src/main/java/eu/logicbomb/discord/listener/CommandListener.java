@@ -22,8 +22,7 @@ public class CommandListener extends ListenerAdapter {
             String[] argsMSG = rawMSG.replaceFirst(PREFIX, "").split(" ");
             String command = argsMSG[0];
             if (command != null && commandmap.containsKey(argsMSG[0])) {
-                commandmap.get(command).run(event.getMessage());
-
+                commandmap.get(command).run(argsMSG, event.getMessage());
             }
         }
     }

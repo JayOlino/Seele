@@ -31,8 +31,10 @@ public class Help implements ICommand {
                     helpOutput(class1);
                 }
             }
-            mb.append("\n");
-            mb.append("\n");
+            mb.append("```");
+            mb.sendTo(msg.getChannel()).queue();
+            mb.clear();
+            mb.append("```");
             reflections = new Reflections("eu.logicbomb.discord.commands.staff");
             allClasses = reflections.getSubTypesOf(ICommand.class);
             mb.append("\n");

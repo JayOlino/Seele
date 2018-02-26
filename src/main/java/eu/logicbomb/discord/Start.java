@@ -21,10 +21,10 @@ public class Start {
         File pfile = new File("Seele.properties");
         if (!pfile.exists()) {
             out = new FileOutputStream(pfile);
-            properties.setProperty("BotToken", "NDE2MjEwNDMyNzg5ODM5ODgz.DXVoiw.oCKXMaG6D9XGoft6_SbgwenVFhY");
+            properties.setProperty("BotToken", "-key-");
 
             try {
-                properties.store(out, null);
+                properties.store(out, "Initial creation of the File");
             }
             finally {
                 if (null != out) {

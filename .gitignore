@@ -1,7 +1,5 @@
 /Seele.properties
+/*.class
 
-
-*.class
-
-target/
+/target/*
 /Seele-Bot.log

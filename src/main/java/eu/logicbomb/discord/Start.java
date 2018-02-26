@@ -9,6 +9,8 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.reflections.Reflections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.logicbomb.discord.icommands.ICommand;
 import eu.logicbomb.discord.listener.CommandListener;
@@ -22,6 +24,7 @@ import net.dv8tion.jda.core.entities.Game;
 public class Start {
     Properties                properties = new Properties();
     HashMap<String, ICommand> commandmap = new HashMap<>();
+    static Logger             LOG        = LoggerFactory.getLogger(Start.class);
 
     private void init() {
 
@@ -36,11 +39,12 @@ public class Start {
             jdaB.setToken(properties.getProperty("BotToken"));
             jdaB.setGame(Game.watching("Wie Chio an meinen gedärmen spielt...."));
 
+            @SuppressWarnings("unused")
             JDA jda = jdaB.buildAsync();
 
         }
         catch(Exception e) {
-            e.printStackTrace();
+            LOG.error("###ERROR###", e);
         }
 
     }
@@ -59,11 +63,7 @@ public class Start {
             }
             finally {
                 if (null != out) {
-                    try {
-                        out.close();
-                    }
-                    catch(IOException ex) {
-                    }
+                    out.close();
                 }
             }
         }
@@ -74,11 +74,7 @@ public class Start {
         }
         finally {
             if (null != in) {
-                try {
-                    in.close();
-                }
-                catch(IOException ex) {
-                }
+                in.close();
             }
         }
 
@@ -92,12 +88,12 @@ public class Start {
                 commandmap.put(class1.getSimpleName().toLowerCase(), class1.newInstance());
             }
         }
-        System.out.println("Added " + commandmap.size() + " commands!");
+        LOG.info("Added " + commandmap.size() + " commands!");
     }
 
     public static void main(String[] args) {
-        System.out.println("Pray that the Necronomicron will not make evil things...");
-        System.out.println("Klatu Veratu Nec..*cough*");
+        LOG.info("Pray that the Necronomicron will not make evil things...");
+        LOG.info("Klatu Veratu Nec..*cough*");
         new Start().init();
     }
 }

@@ -20,6 +20,10 @@ public class Help implements ICommand {
             Set<Class<? extends ICommand>> allClasses = null;
             mb.append("```\n");
             mb.append("*** Die Hilfe ***");
+            mb.append("```");
+            mb.sendTo(msg.getChannel()).queue();
+            mb.clear();
+            mb.append("```");
             if (isOwnerOrAdmin(msg)) {
                 mb.append("\n");
                 mb.append("-- Admin-Befehle --");
@@ -63,7 +67,7 @@ public class Help implements ICommand {
         }
         catch(Exception e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOG.error("###ERROR###", e);
         }
     }
 

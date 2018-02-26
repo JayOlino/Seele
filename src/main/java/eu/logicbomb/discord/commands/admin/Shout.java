@@ -3,20 +3,18 @@ package eu.logicbomb.discord.commands.admin;
 import eu.logicbomb.discord.icommands.ICommand;
 import net.dv8tion.jda.core.entities.Message;
 
-public class Shutdown implements ICommand {
+public class Shout implements ICommand {
 
     @Override
     public void run(String[] args, Message msg) {
         if (!isBotOrFake(msg.getAuthor())) {
-            if (isOwnerOrAdmin(msg)) {
-                msg.getJDA().shutdownNow();
-            }
+
         }
     }
 
     @Override
     public String whatDoYouDo() {
-        return "Ich fahre den Bot unverzüglich runter, der Bot muss auf dem Server neu ausgeführt werden";
+        return "Ich diene als Sprachrohr irgendwann";
     }
 
 }

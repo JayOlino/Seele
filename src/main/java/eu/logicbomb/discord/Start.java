@@ -61,7 +61,7 @@ public class Start {
             jdaB.setAutoReconnect(true);
             jdaB.setStatus(OnlineStatus.DO_NOT_DISTURB);
             jdaB.setToken(properties.getProperty("BotToken"));
-            JDA jda = jdaB.buildAsync();
+            JDA jd = jdaB.buildAsync();
         }
         catch(Exception e) {
             e.printStackTrace();

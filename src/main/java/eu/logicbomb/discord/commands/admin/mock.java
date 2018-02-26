@@ -26,9 +26,11 @@ import net.dv8tion.jda.core.managers.GuildManager;
 public class mock implements ICommand {
 
 	Vector<String> vecMok = new Vector<>();
-
+	int time = 10;
 	@Override
 	public void run(String[] args, Message msg) {
+		msg.delete().queue();
+
 		if (!isBotOrFake(msg.getAuthor())) {
 			try {
 				fillMock();
@@ -47,13 +49,13 @@ public class mock implements ICommand {
 								name = mem.getNickname();
 								TimeUnit.MILLISECONDS.sleep(250);
 								gc.setNickname(mem, getRandNick()).queue();
-								TimeUnit.SECONDS.sleep(5);
+								TimeUnit.SECONDS.sleep(time);
 								gc.setNickname(mem, name).queue();
 							} else {
 								name = mem.getEffectiveName();
 								TimeUnit.MILLISECONDS.sleep(250);
 								gc.setNickname(mem, getRandNick()).queue();
-								TimeUnit.SECONDS.sleep(5);
+								TimeUnit.SECONDS.sleep(time);
 								gc.setNickname(mem, name).queue();
 
 							}
@@ -65,7 +67,6 @@ public class mock implements ICommand {
 			} catch (Exception e) {
 				LOG.error("###EXCEPTION###", e);
 			}
-			System.out.println("hi :D");
 		}
 	}
 
@@ -94,7 +95,7 @@ public class mock implements ICommand {
 
 	@Override
 	public String whatDoYouDo() {
-		return "Ich ärger die Leute";
+		return "Ich ï¿½rger die Leute";
 	}
 
 }

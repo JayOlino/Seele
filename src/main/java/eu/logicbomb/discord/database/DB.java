@@ -32,16 +32,18 @@ public class DB {
         if (host.equalsIgnoreCase("-") || database.equalsIgnoreCase("-") ||
                 port.equalsIgnoreCase("-") || user.equalsIgnoreCase("-") || password.equalsIgnoreCase("-")) {
             Start.LOG.info("DB-Parameter nicht gefüllt, Datenbank betrieb nicht möglich.");
+            System.out.println("DB-Parameter nicht gefüllt, Datenbank betrieb nicht möglich.");
         }
         else {
             Start.LOG.info("DB-Parameter gefüllt, Datenbank betrieb möglich.");
+            System.out.println("DB-Parameter gefüllt, Datenbank betrieb möglich.");
             initConnection();
         }
 
     }
 
     private void fillProperties() throws Exception {
-        try (InputStream resourceStream = getClass().getResourceAsStream("DB.properties")) {
+        try (InputStream resourceStream = DB.class.getResourceAsStream("/eu/logicbomb/discord/database/DB.properties")) {
             statements.load(resourceStream);
         }
     }
@@ -54,6 +56,7 @@ public class DB {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Start.LOG.info("Tabelle gefunden, Datenbank existiert");
+                System.out.println("Tabelle gefunden, Datenbank existiert");
                 found = true;
             }
         }

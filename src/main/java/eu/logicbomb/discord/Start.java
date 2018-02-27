@@ -9,6 +9,8 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.reflections.Reflections;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +28,7 @@ import net.dv8tion.jda.core.entities.Game;
 public class Start {
     Properties                properties = new Properties();
     HashMap<String, ICommand> commandmap = new HashMap<>();
-    public static Logger      LOG        = LoggerFactory.getLogger(Start.class.getSimpleName());
+    public static Logger      LOG        = LoggerFactory.getLogger(Start.class);
 
     private DB                db;
 
@@ -94,19 +96,24 @@ public class Start {
     }
 
     private void initCommands() throws InstantiationException, IllegalAccessException {
-        Reflections reflections = new Reflections("eu.logicbomb.discord.commands");
+        //        Reflections reflections = new Reflections("eu.logicbomb.discord.commands");
+        Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(ClasspathHelper.forPackage(".eu.logicbomb.discord", Start.class.getClassLoader())).addClassLoader(Start.class.getClassLoader()));
+        System.out.println(Start.class.getPackage());
         Set<Class<? extends ICommand>> allClasses = reflections.getSubTypesOf(ICommand.class);
         for (Class<? extends ICommand> class1 : allClasses) {
-            if (!class1.getSimpleName().equalsIgnoreCase("sample")) {
+            if (!class1.getPackage().getName().contains("beispiel")) {
                 commandmap.put(class1.getSimpleName().toLowerCase(), class1.newInstance());
             }
         }
         LOG.info("Added " + commandmap.size() + " commands!");
+        System.out.println("Added " + commandmap.size() + " commands!");
     }
 
     public static void main(String[] args) {
         LOG.info("Pray that the Necronomicron will not make evil things...");
         LOG.info("Klatu Veratu Nec..*cough* *cough* *cough*");
+        System.out.println("Pray that the Necronomicron will not make evil things...");
+        System.out.println("Klatu Veratu Nec..*cough* *cough* *cough*");
 
         new Start().init();
     }

@@ -40,6 +40,7 @@ public class GuildListener extends ListenerAdapter {
             for (Role role : event.getRoles()) {
                 if (role.getName().equals("Main-Probe")) {
                     LOG.info(event.getMember().getEffectiveName() + " add Roll : " + role.getName());
+                    System.out.println(event.getMember().getEffectiveName() + " add Roll : " + role.getName());
                     if (db.insertUserToTrial(event.getMember().getUser().getIdLong())) {
                         MessageBuilder mb = new MessageBuilder();
                         SimpleDateFormat sdf = new SimpleDateFormat("EE dd.MM.yyyy' um 'HH:mm:ss");
@@ -81,6 +82,7 @@ public class GuildListener extends ListenerAdapter {
 
                 if (role.getName().equals("Main-Probe")) {
                     LOG.info(event.getMember().getEffectiveName() + " remove Roll : " + role.getName());
+                    System.out.println(event.getMember().getEffectiveName() + " remove Roll : " + role.getName());
                     db.deleteUserToTrial(event.getMember().getUser().getIdLong());
                 }
             }

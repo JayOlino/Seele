@@ -9,8 +9,10 @@ public class ReadyListener implements EventListener {
 
     @Override
     public void onEvent(Event event) {
-        if (event instanceof ReadyEvent)
+        if (event instanceof ReadyEvent) {
             Start.LOG.info("API is ready for Use!");
+            System.out.println("API is ready for Use!");
+        }
     }
 
 }

@@ -95,7 +95,7 @@ public class mock implements ICommand {
 
 	@Override
 	public String whatDoYouDo() {
-		return "Ich �rger die Leute";
+		return "Ich Ärger die Leute";
 	}
 
 }

@@ -16,7 +16,7 @@ public class Shutdown implements ICommand {
 
     @Override
     public String whatDoYouDo() {
-        return "Ich fahre den Bot unverzüglich runter, der Bot muss auf dem Server neu ausgeführt werden";
+        return "Ich fahre den Bot unverzÃ¼glich runter, der Bot muss auf dem Server neu ausgefÃ¼hrt werden";
     }
 
 }

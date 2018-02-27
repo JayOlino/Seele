@@ -1,4 +1,4 @@
-package eu.logicbomb.discord.commands.admin;
+package eu.logicbomb.discord.commands.beispiel;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -43,7 +43,7 @@ public class mock implements ICommand {
                             getRandNick(gc, mem);
                         }
                     }
-                    TimeUnit.SECONDS.sleep(10);
+                    TimeUnit.SECONDS.sleep(3);
                     getNormNick(gc, g.getMembers(), umap);
                 }
             }

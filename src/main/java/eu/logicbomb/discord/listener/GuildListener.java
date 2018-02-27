@@ -4,7 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import eu.logicbomb.discord.Start;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import eu.logicbomb.discord.database.DB;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
@@ -16,12 +18,13 @@ import net.dv8tion.jda.core.events.guild.member.GuildMemberRoleRemoveEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class GuildListener extends ListenerAdapter {
+    public static Logger LOG    = LoggerFactory.getLogger("GuildListenerLog");
 
-    DB     db     = null;
-    String mainID;
+    DB                   db     = null;
+    String               mainID;
 
-    String chatID = "295963007769509888";
-    String tID    = "370873772619857921";
+    String               chatID = "295963007769509888";
+    String               tID    = "370873772619857921";
 
     public GuildListener(DB db, String mainID) {
         this.db = db;
@@ -36,7 +39,7 @@ public class GuildListener extends ListenerAdapter {
         if (guild.getId().equals(mainID)) {
             for (Role role : event.getRoles()) {
                 if (role.getName().equals("Main-Probe")) {
-                    Start.LOG.info(event.getMember().getEffectiveName() + " add Roll : " + role.getName());
+                    LOG.info(event.getMember().getEffectiveName() + " add Roll : " + role.getName());
                     if (db.insertUserToTrial(event.getMember().getUser().getIdLong())) {
                         MessageBuilder mb = new MessageBuilder();
                         SimpleDateFormat sdf = new SimpleDateFormat("EE dd.MM.yyyy' um 'HH:mm:ss");
@@ -77,7 +80,7 @@ public class GuildListener extends ListenerAdapter {
             for (Role role : event.getRoles()) {
 
                 if (role.getName().equals("Main-Probe")) {
-                    Start.LOG.info(event.getMember().getEffectiveName() + " remove Roll : " + role.getName());
+                    LOG.info(event.getMember().getEffectiveName() + " remove Roll : " + role.getName());
                     db.deleteUserToTrial(event.getMember().getUser().getIdLong());
                 }
             }

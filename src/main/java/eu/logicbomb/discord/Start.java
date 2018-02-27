@@ -26,7 +26,7 @@ import net.dv8tion.jda.core.entities.Game;
 public class Start {
     Properties                properties = new Properties();
     HashMap<String, ICommand> commandmap = new HashMap<>();
-    public static Logger      LOG        = LoggerFactory.getLogger(Start.class);
+    public static Logger      LOG        = LoggerFactory.getLogger(Start.class.getSimpleName());
 
     private DB                db;
 

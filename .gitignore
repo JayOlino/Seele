@@ -4,3 +4,5 @@
 /target/*
 /Seele-Bot.log
 /target/
+/GuildListenerLog.log
+/log/

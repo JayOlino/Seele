@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import eu.logicbomb.discord.Start;
 import eu.logicbomb.discord.database.DB;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
@@ -35,7 +36,7 @@ public class GuildListener extends ListenerAdapter {
         if (guild.getId().equals(mainID)) {
             for (Role role : event.getRoles()) {
                 if (role.getName().equals("Main-Probe")) {
-                    System.out.println(event.getMember().getEffectiveName() + " add Roll : " + role.getName());
+                    Start.LOG.info(event.getMember().getEffectiveName() + " add Roll : " + role.getName());
                     if (db.insertUserToTrial(event.getMember().getUser().getIdLong())) {
                         MessageBuilder mb = new MessageBuilder();
                         SimpleDateFormat sdf = new SimpleDateFormat("EE dd.MM.yyyy' um 'HH:mm:ss");
@@ -76,7 +77,7 @@ public class GuildListener extends ListenerAdapter {
             for (Role role : event.getRoles()) {
 
                 if (role.getName().equals("Main-Probe")) {
-                    System.out.println(event.getMember().getEffectiveName() + " remove Roll : " + role.getName());
+                    Start.LOG.info(event.getMember().getEffectiveName() + " remove Roll : " + role.getName());
                     db.deleteUserToTrial(event.getMember().getUser().getIdLong());
                 }
             }

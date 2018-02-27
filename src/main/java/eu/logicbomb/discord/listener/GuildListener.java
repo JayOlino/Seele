@@ -18,7 +18,7 @@ public class GuildListener extends ListenerAdapter {
 
     DB     db     = null;
     String mainID;
-    //    String tID    = "416546236225552394";
+
     String chatID = "295963007769509888";
     String tID    = "370873772619857921";
 

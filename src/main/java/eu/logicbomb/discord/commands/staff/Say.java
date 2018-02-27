@@ -1,6 +1,7 @@
 package eu.logicbomb.discord.commands.staff;
 
 import eu.logicbomb.discord.icommands.ICommand;
+import eu.logicbomb.discord.listener.CommandListener;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
 
@@ -10,7 +11,7 @@ public class Say implements ICommand {
     @Override
     public void run(String[] args, Message msg) {
         if (!isBotOrFake(msg.getAuthor())) {
-            mb.append("Ich werde von " + usernick(msg) + " gezwungen zu sagen: " + msg.getContentRaw()).sendTo(msg.getChannel()).queue();
+            mb.append("Ich werde von " + usernick(msg) + " gezwungen zu sagen: " + msg.getContentRaw().replaceFirst(CommandListener.PREFIX + "say ", "")).sendTo(msg.getChannel()).queue();
             msg.delete().queue();
         }
     }

@@ -1,7 +1,6 @@
 package eu.logicbomb.discord.commands.admin;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -11,91 +10,84 @@ import java.util.Random;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
-import com.google.common.util.concurrent.TimeLimiter;
-
 import eu.logicbomb.discord.icommands.ICommand;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Guild.Timeout;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.managers.GuildController;
-import net.dv8tion.jda.core.managers.GuildManager;
 
 public class mock implements ICommand {
 
-	Vector<String> vecMok = new Vector<>();
-	int time = 10;
-	@Override
-	public void run(String[] args, Message msg) {
-		msg.delete().queue();
+    Vector<String> vecMok = new Vector<>();
+    int            time   = 10;
 
-		if (!isBotOrFake(msg.getAuthor())) {
-			try {
-				fillMock();
+    @Override
+    public void run(String[] args, Message msg) {
+        msg.delete().queue();
 
-				if (isOwnerOrAdmin(msg)) {
-					Guild g = msg.getGuild();
+        if (!isBotOrFake(msg.getAuthor())) {
+            try {
+                fillMock();
 
-					GuildController gc = new GuildController(g);
-					for (Member mem : g.getMembers()) {
-						if (!mem.getUser().isBot() && !mem.getOnlineStatus().equals(OnlineStatus.OFFLINE)
-								&& !mem.hasPermission(Permission.ADMINISTRATOR)) {
+                if (isOwnerOrAdmin(msg)) {
+                    Guild g = msg.getGuild();
 
-							String name = null;
-							TimeUnit.MILLISECONDS.sleep(250);
-							if (mem.getNickname() != null) {
-								name = mem.getNickname();
-								TimeUnit.MILLISECONDS.sleep(250);
-								gc.setNickname(mem, getRandNick()).queue();
-								TimeUnit.SECONDS.sleep(time);
-								gc.setNickname(mem, name).queue();
-							} else {
-								name = mem.getEffectiveName();
-								TimeUnit.MILLISECONDS.sleep(250);
-								gc.setNickname(mem, getRandNick()).queue();
-								TimeUnit.SECONDS.sleep(time);
-								gc.setNickname(mem, name).queue();
+                    GuildController gc = new GuildController(g);
+                    HashMap<String, String> umap = new HashMap<>();
+                    for (Member mem : g.getMembers()) {
+                        if (!mem.getUser().isBot() && !mem.getOnlineStatus().equals(OnlineStatus.OFFLINE)
+                                && !mem.hasPermission(Permission.ADMINISTRATOR)) {
+                            umap.put(mem.getEffectiveName(), mem.getNickname());
+                            getRandNick(gc, mem);
+                        }
+                    }
+                    TimeUnit.SECONDS.sleep(10);
+                    getNormNick(gc, g.getMembers(), umap);
+                }
+            }
+            catch(Exception e) {
+                LOG.error("###EXCEPTION###", e);
+            }
+        }
+    }
 
-							}
+    private void fillMock() throws Exception {
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        InputStream is = classloader.getResourceAsStream("mock.txt");
+        InputStreamReader streamReader = new InputStreamReader(is, StandardCharsets.UTF_8);
+        BufferedReader reader = new BufferedReader(streamReader);
+        try {
+            for (String line; (line = reader.readLine()) != null;) {
+                if (line != null || line.length() > 1) {
+                    vecMok.add(line);
+                }
+            }
+        }
+        finally {
+            reader.close();
+        }
 
-						}
-					}
+    }
 
-				}
-			} catch (Exception e) {
-				LOG.error("###EXCEPTION###", e);
-			}
-		}
-	}
+    private void getRandNick(GuildController gc, Member mem) {
+        Random generator = new Random();
+        int rnd = generator.nextInt(vecMok.size());
+        gc.setNickname(mem, vecMok.get(rnd)).queue();
+    }
 
-	private void fillMock() throws Exception {
-		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-		InputStream is = classloader.getResourceAsStream("mock.txt");
-		InputStreamReader streamReader = new InputStreamReader(is, StandardCharsets.UTF_8);
-		BufferedReader reader = new BufferedReader(streamReader);
-		try {
-			for (String line; (line = reader.readLine()) != null;) {
-				if (line != null || line.length() > 1) {
-					vecMok.add(line);
-				}
-			}
-		} finally {
-			reader.close();
-		}
+    private void getNormNick(GuildController gc, List<Member> mem, HashMap<String, String> umap) {
+        for (Member member : mem) {
+            if (umap.containsKey(member.getEffectiveName())) {
+                gc.setNickname(member, umap.get(member.getEffectiveName())).queue();
+            }
+        }
+    }
 
-	}
-
-	private String getRandNick() {
-		Random generator = new Random();
-		int rnd = generator.nextInt(vecMok.size());
-		return vecMok.get(rnd);
-	}
-
-	@Override
-	public String whatDoYouDo() {
-		return "Ich Ärger die Leute";
-	}
+    @Override
+    public String whatDoYouDo() {
+        return "Ich Ärger die Leute";
+    }
 
 }

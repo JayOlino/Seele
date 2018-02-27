@@ -12,8 +12,10 @@ import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import eu.logicbomb.discord.database.DB;
 import eu.logicbomb.discord.icommands.ICommand;
 import eu.logicbomb.discord.listener.CommandListener;
+import eu.logicbomb.discord.listener.GuildListener;
 import eu.logicbomb.discord.listener.ReadyListener;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -24,20 +26,24 @@ import net.dv8tion.jda.core.entities.Game;
 public class Start {
     Properties                properties = new Properties();
     HashMap<String, ICommand> commandmap = new HashMap<>();
-    static Logger             LOG        = LoggerFactory.getLogger(Start.class);
+    public static Logger      LOG        = LoggerFactory.getLogger(Start.class);
+
+    private DB                db;
 
     private void init() {
 
         try {
             initProperty();
+            db = new DB(properties);
             initCommands();
             JDABuilder jdaB = new JDABuilder(AccountType.BOT);
             jdaB.addEventListener(new ReadyListener());
+            jdaB.addEventListener(new GuildListener(db, (String) properties.get("BotServerID")));
             jdaB.addEventListener(new CommandListener(properties, commandmap));
             jdaB.setAutoReconnect(true);
             jdaB.setStatus(OnlineStatus.DO_NOT_DISTURB);
             jdaB.setToken(properties.getProperty("BotToken"));
-            jdaB.setGame(Game.watching("Wie Chio an meinen ged‰rmen spielt...."));
+            jdaB.setGame(Game.watching("Wie Chio an meinen ged√§rmen spielt...."));
 
             @SuppressWarnings("unused")
             JDA jda = jdaB.buildAsync();
@@ -50,13 +56,20 @@ public class Start {
     }
 
     private void initProperty() throws IOException {
-
-        FileInputStream in = null;
+        String filename = "Seele.properties";
         FileOutputStream out = null;
-        File pfile = new File("Seele.properties");
+        FileInputStream in = null;
+
+        File pfile = new File(filename);
         if (!pfile.exists()) {
             out = new FileOutputStream(pfile);
             properties.setProperty("BotToken", "-key-");
+            properties.setProperty("BotServerID", "-");
+            properties.setProperty("BotDB", "-");
+            properties.setProperty("BotDBHost", "-");
+            properties.setProperty("BotDBUser", "-");
+            properties.setProperty("BotDBPW", "-");
+            properties.setProperty("BotDBPort", "-");
 
             try {
                 properties.store(out, "Initial creation of the File");
@@ -93,7 +106,8 @@ public class Start {
 
     public static void main(String[] args) {
         LOG.info("Pray that the Necronomicron will not make evil things...");
-        LOG.info("Klatu Veratu Nec..*cough*");
+        LOG.info("Klatu Veratu Nec..*cough* *cough* *cough*");
+
         new Start().init();
     }
 }

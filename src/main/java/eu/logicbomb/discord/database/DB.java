@@ -41,7 +41,7 @@ public class DB {
     }
 
     private void fillProperties() throws Exception {
-        try (InputStream resourceStream = getClass().getResourceAsStream("DB.properties")) {
+        try (InputStream resourceStream = DB.class.getResourceAsStream("/resources/eu/logicbomb/discord/database/DB.properties")) {
             statements.load(resourceStream);
         }
     }

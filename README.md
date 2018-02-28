@@ -11,7 +11,7 @@ coming soon
 ## Credits
 * Dev: [JayOlino](https://github.com/JayOlino)
  
-* Avatar of <Main> Seele is made by [Delirus Avis](https://www.guilded.gg/profile/VdxDYKDd)
+* Avatar of Seele is made by [Delirus Avis](https://www.guilded.gg/profile/VdxDYKDd)
 
 
 

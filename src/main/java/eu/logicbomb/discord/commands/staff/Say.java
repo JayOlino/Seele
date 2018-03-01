@@ -11,8 +11,14 @@ public class Say implements ICommand {
     @Override
     public void run(String[] args, Message msg) {
         if (!isBotOrFake(msg.getAuthor())) {
-            mb.append("Ich werde von " + usernick(msg) + " gezwungen zu sagen: " + msg.getContentRaw().replaceFirst(CommandListener.PREFIX + "say ", "")).sendTo(msg.getChannel()).queue();
+            if (isOwnerOrAdmin(msg)) {
+                mb.append(msg.getContentRaw().replaceFirst(CommandListener.PREFIX + "say ", "")).sendTo(msg.getChannel()).queue();
+            }
+            else {
+                mb.append("Ich werde von " + usernick(msg) + " gezwungen zu sagen: " + msg.getContentRaw().replaceFirst(CommandListener.PREFIX + "say ", "")).sendTo(msg.getChannel()).queue();
+            }
             msg.delete().queue();
+            mb.clear();
         }
     }
 
@@ -22,7 +28,7 @@ public class Say implements ICommand {
 
     @Override
     public String whatDoYouDo() {
-        return "Ich diene als Sprachrohr";
+        return "Ich diene als Sprachrohr für die User";
     }
 
 }

@@ -22,7 +22,7 @@ public class LMGTFY implements ICommand {
 
     @Override
     public String whatDoYouDo() {
-        return "Ich diene als Beispiel";
+        return "Zeige den anderen wie man \"Googelt\"";
     }
 
 }

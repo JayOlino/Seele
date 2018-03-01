@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -16,6 +17,7 @@ import eu.logicbomb.discord.commands.staff.Help;
 import eu.logicbomb.discord.commands.staff.LMGTFY;
 import eu.logicbomb.discord.commands.staff.Say;
 import eu.logicbomb.discord.database.DB;
+import eu.logicbomb.discord.demon.TrialDemon;
 import eu.logicbomb.discord.icommands.ICommand;
 import eu.logicbomb.discord.listener.CommandListener;
 import eu.logicbomb.discord.listener.GuildListener;
@@ -27,10 +29,11 @@ import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Game;
 
 public class Start {
-    Properties                              properties = new Properties();
+    public static Properties                properties = new Properties();
     public static HashMap<String, ICommand> commandmap = new HashMap<>();
-    public static Logger                    LOG        = LoggerFactory.getLogger(Start.class.getSimpleName());
-
+    public static Logger                    LOG        = LoggerFactory.getLogger(Start.class);
+    public static SimpleDateFormat          sdf        = new SimpleDateFormat("EE dd.MM.yyyy' um 'HH:mm:ss");
+    public static JDA                       jda        = null;
     private DB                              db;
 
     private void init() {
@@ -48,9 +51,8 @@ public class Start {
             jdaB.setToken(properties.getProperty("BotToken"));
             jdaB.setGame(Game.watching("Wie Chio an meinen gedärmen spielt...."));
 
-            @SuppressWarnings("unused")
-            JDA jda = jdaB.buildAsync();
-
+            jda = jdaB.buildAsync();
+            new TrialDemon(db);
         }
         catch(Exception e) {
             LOG.error("###ERROR###", e);

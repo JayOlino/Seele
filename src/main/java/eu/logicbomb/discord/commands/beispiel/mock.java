@@ -48,7 +48,7 @@ public class mock implements ICommand {
                 }
             }
             catch(Exception e) {
-                LOG.error("###EXCEPTION###", e);
+                LOG.error("###ERROR###", e);
             }
         }
     }
@@ -87,7 +87,7 @@ public class mock implements ICommand {
 
     @Override
     public String whatDoYouDo() {
-        return "Ich Ã„rger die Leute";
+        return "Ich Ärger die Leute";
     }
 
 }

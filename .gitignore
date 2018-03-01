@@ -1,8 +1,11 @@
 /Seele.properties
-/*.class
+*.class
 
 /target/*
+/bin/*
+/bin/
 /Seele-Bot.log
 /target/
 /GuildListenerLog.log
 /log/
+.gradle/

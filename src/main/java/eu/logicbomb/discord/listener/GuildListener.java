@@ -1,12 +1,13 @@
 package eu.logicbomb.discord.listener;
 
-import java.text.SimpleDateFormat;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import eu.logicbomb.discord.Start;
 import eu.logicbomb.discord.database.DB;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
@@ -21,10 +22,19 @@ public class GuildListener extends ListenerAdapter {
     public static Logger LOG    = LoggerFactory.getLogger("GuildListenerLog");
 
     DB                   db     = null;
-    String               mainID;
+    /**
+     * MAIN-ServerID 
+     */
+    static String        mainID;
+    /**
+     * Main-ChatID 
+     */
+    static String        chatID = "295963007769509888";
 
-    String               chatID = "295963007769509888";
-    String               tID    = "370873772619857921";
+    /**
+     * LeitungsChannelID 
+     */
+    public static String tID    = "370873772619857921";
 
     public GuildListener(DB db, String mainID) {
         this.db = db;
@@ -40,28 +50,26 @@ public class GuildListener extends ListenerAdapter {
             for (Role role : event.getRoles()) {
                 if (role.getName().equals("Main-Probe")) {
                     LOG.info(event.getMember().getEffectiveName() + " add Roll : " + role.getName());
-                    if (db.insertUserToTrial(event.getMember().getUser().getIdLong())) {
-                        MessageBuilder mb = new MessageBuilder();
-                        SimpleDateFormat sdf = new SimpleDateFormat("EE dd.MM.yyyy' um 'HH:mm:ss");
-                        Date date = new Date(System.currentTimeMillis());
-                        Calendar c = Calendar.getInstance();
-                        c.setTime(date);
+                    try {
 
-                        // manipulate date
-                        c.add(Calendar.HOUR, (24 * 7));
-                        date = c.getTime();
+                        if (db.insertTrial(event.getMember().getUser().getIdLong())) {
+                            MessageBuilder mb = new MessageBuilder();
 
-                        mb.append("@everyone\n");
-                        mb.append("Wir haben einen Neuen der unserem Wahnsinn standhalten will.\n");
-                        mb.append("Sein Name lautet: " + event.getMember().getAsMention() + " und seine Probezeit sollte ungefÃ¤hr am __**" + sdf.format(date) + "**__ enden.");
-                        Message msg = mb.build();
-                        TextChannel tx = guild.getTextChannelById(tID);
-                        tx.sendMessage(msg).queue();
+                            mb.append("@everyone\n");
+                            mb.append("Wir haben einen Neuen der unserem Wahnsinn standhalten will.\n");
+                            mb.append("Sein Name lautet: " + event.getMember().getAsMention() + " und seine Probezeit sollte ungefähr am __**" + Start.sdf.format(getFinishDate()) + "**__ enden.");
+                            Message msg = mb.build();
+                            TextChannel tx = guild.getTextChannelById(tID);
+                            tx.sendMessage(msg).queue();
+                        }
+                    }
+                    catch(Exception e) {
+                        LOG.error("###ERROR###", e);
                     }
                 }
                 else if (role.getName().equals("Member MAIN")) {
                     MessageBuilder mb = new MessageBuilder();
-                    mb.append("@everyone heute hat wiedereinmal jemand die Probezeit mit uns Ãœberstanden. Herzlichen GlÃ¼ckwunsch " + event.getMember().getAsMention());
+                    mb.append("@everyone heute hat wiedereinmal jemand die Probezeit mit uns Überstanden. Herzlichen Glückwunsch " + event.getMember().getAsMention());
                     Message msg = mb.build();
                     TextChannel tx = guild.getTextChannelById(chatID);
                     tx.sendMessage(msg).queue();
@@ -81,10 +89,35 @@ public class GuildListener extends ListenerAdapter {
 
                 if (role.getName().equals("Main-Probe")) {
                     LOG.info(event.getMember().getEffectiveName() + " remove Roll : " + role.getName());
-                    db.deleteUserToTrial(event.getMember().getUser().getIdLong());
+                    try {
+                        db.deleteTrial(event.getMember().getUser().getIdLong());
+                    }
+                    catch(SQLException e) {
+                        LOG.error("###ERROR###", e);
+                    }
                 }
             }
 
         }
+    }
+
+    public static Date getFinishDate() {
+        Date date = new Date(System.currentTimeMillis());
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        // manipulate date
+        c.add(Calendar.HOUR, (24 * 7));
+        date = c.getTime();
+        return date;
+    }
+
+    public static Date getFinishDate(long l) {
+        Date date = new Date(l);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        // manipulate date
+        c.add(Calendar.HOUR, (24 * 7));
+        date = c.getTime();
+        return date;
     }
 }
